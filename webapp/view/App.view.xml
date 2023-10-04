@@ -1,6 +1,8 @@
-<mvc:View
+<mvc:View	
+	controllerName="sap.ui.demo.db.controller.App"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:form="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
 	xmlns="sap.m"
 	displayBlock="true"
 	height="100%"
@@ -32,5 +34,61 @@
 			<Label text="{i18n>enabled}"/>
             <CheckBox selected="{/enabled}"/>
 		</form:SimpleForm>
+	</Panel>
+	<Panel 
+		headerText="{i18n>panelHeaderText2}"
+		class="sapUiResponsiveMargin"
+		width="auto">
+
+		<content>
+			<l:VerticalLayout >
+				<Label 
+					labelFor="address"
+					text="{i18n>address}:"></Label>
+				<FormattedText 
+					class="sapUiSmallMaringBottom"
+					htmlText="{/address/street}&lt;br>{/address/zip}&lt;br>{/address/city}&lt;br>{/address/country}"
+					id="address"
+					width="200px"></FormattedText>
+				<Link href="{ 
+					parts: [
+						'/firstName',
+						'/lastName'
+					],
+					formatter: '.formatMail'
+				 }"
+				 text="{i18n>sendEmail}"></Link>
+			</l:VerticalLayout>
+			<l:VerticalLayout >
+				<Label 
+					labelFor="salesAmount"
+					text="{i18n>salesAmount}"></Label>
+					<Input description="{/currencyCode}" enabled="{/enabled}" id="salesAmount"
+						value="{
+							parts: [
+								{path: '/salesAmount'},
+								{path: '/currencyCode'}
+							],
+							type: 'sap.ui.model.type.Currency',
+							formatOptions: {showMeasure: false}
+						}" width="200px"/>
+			</l:VerticalLayout>
+		</content>
+	</Panel>
+	<Panel 
+		headerText="{i18n>headerPanelText3}"
+		class="sapUiResponsiveMargin"
+		width="auto"
+	>
+	<List
+		headerText="{i18n>productListTitle}" 
+		items="{
+			path: '/products'
+		}"
+		>
+		<StandardListItem 
+			title="{ProductName}"></StandardListItem>
+	</List>
+	
 	</Panel>
 </mvc:View>

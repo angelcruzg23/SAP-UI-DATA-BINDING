@@ -13,11 +13,25 @@ sap.ui.require([
 
     sap.ui.getCore().attachInit( function () {
 
+        //Creating a JSON Model from a file 
+        var oProduct = new JSONModel();
+        oProduct.loadData("./mode/Products.json");
+        sap.ui.getCore().setModel(oProduct,"products");
+
+
         //Create a JSON Model from an object literal
         var oModel = new JSONModel({
             firstName:  "Angel",
             lastName:   "Cruz", 
             enabled:    true,
+            address: {
+                street:  "1 any Lane",
+                city:    "Walldorf",
+                zip:     "610393",
+                country: "Germany"
+            },
+            salesAmount: 12345.678988,
+            currencyCode: 'EUR',
             panelHeaderText: "Data Binding Basics"
         });
 
@@ -34,11 +48,14 @@ sap.ui.require([
         sap.ui.getCore().setModel(oModel);
         sap.ui.getCore().setModel(oResourceModel,"i18n");
 
+        var oView = new XMLView({
+            viewName: "sap.ui.demo.db.view.App"});
+
+        //Register view with message manager 
+        sap.ui.getCore().getMessageManager().registerObject(oView,true);
 
         //Display de XML View called App
-        new XMLView({
-            viewName: "sap.ui.demo.db.view.App",
-        }).placeAt("content")
+        oView.placeAt("content")
 
     })
 });
